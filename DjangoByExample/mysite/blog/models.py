@@ -9,6 +9,11 @@ from django.contrib.auth.models import User
 #
 #     python manage.py sqlmigrate blog 0001
 #         - this command is to see the RAW sql command 
+#         - by default, django will create databaes table based on your :
+#            AppName_ModelName ==> blog_post ( CREATE TABLE "blog_post")
+#         - to customize your own table name, you can use attribute "db_table" in meta class
+#     By default, Django create PRIMARY KEY for you, but you can specify your own by:
+#         using primary_key=True in your model "field"
 
 class Post(models.Model):
     STATUS_CHOICE = (
