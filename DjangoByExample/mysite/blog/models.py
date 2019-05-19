@@ -14,6 +14,16 @@ from django.contrib.auth.models import User
 #         - to customize your own table name, you can use attribute "db_table" in meta class
 #     By default, Django create PRIMARY KEY for you, but you can specify your own by:
 #         using primary_key=True in your model "field"
+#
+
+
+# objects = default manager for all database
+#     we can define custom manager like below 
+
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status="published")
+
 
 class Post(models.Model):
     STATUS_CHOICE = (
@@ -30,6 +40,12 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
     
+    # default manager
+    objects = models.Manager()
+
+    # custom manager
+    published = PublishedManager()
+
     class meta:
         ordering = ('-publish',)
 
